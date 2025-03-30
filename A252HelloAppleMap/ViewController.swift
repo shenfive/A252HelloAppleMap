@@ -21,15 +21,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         checkLocationAuthorizationStatus(locationManager)
         
         
+        locationManager.activityType = .automotiveNavigation
+        locationManager.startUpdatingLocation()
         
+        theMapView.userTrackingMode = .followWithHeading
 
+        theMapView.showsUserLocation = true
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations
+    locations: [CLLocation]) {
+        let coordinate = locations[0].coordinate
+        print(coordinate)
+        
         if let coordinate = locationManager.location?.coordinate{
             let xScale:CLLocationDegrees = 0.001
             let yScale:CLLocationDegrees = 0.001
@@ -37,9 +48,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let region =  MKCoordinateRegion(center: coordinate, span: span)
             theMapView.setRegion(region, animated: true)
         }
-
-        theMapView.showsUserLocation = true
-        
+    }
+    
             
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
 //            let latitude:CLLocationDegrees = 25.0444032
@@ -64,7 +74,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //
 //        }
     
-    }
+//    }
 
     @IBAction func longPressGesture(_ sender: UILongPressGestureRecognizer) {
         print("long Press")
@@ -108,7 +118,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             break
         }
     }
-    
+
     
     //顯示位置授權
     func showAlertForSettings() {
