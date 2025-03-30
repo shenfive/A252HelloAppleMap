@@ -26,6 +26,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         checkLocationAuthorizationStatus(locationManager)
+        
+        
+        
 
         if let coordinate = locationManager.location?.coordinate{
             let xScale:CLLocationDegrees = 0.001
@@ -35,6 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             theMapView.setRegion(region, animated: true)
         }
 
+        theMapView.showsUserLocation = true
         
             
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
